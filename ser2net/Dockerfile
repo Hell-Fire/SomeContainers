@@ -7,4 +7,4 @@ COPY --from=builder /lib/libc.musl-* /lib/
 COPY --from=builder /usr/sbin/ser2net /usr/sbin/ser2net
 COPY --from=builder /etc/ser2net.conf /etc/ser2net.conf
 
-ENTRYPOINT ["/usr/sbin/ser2net", "-c", "/etc/ser2net.conf"]
+ENTRYPOINT ["/usr/sbin/ser2net", "-n", "-c", "/etc/ser2net.conf"]
