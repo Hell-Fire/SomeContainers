@@ -21,7 +21,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}/ser2net
   IMAGE_PATH: ./ser2net
-
+  PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
 
 jobs:
   build:
@@ -82,10 +82,10 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ${{ env.IMAGE_PATH }}
+          platforms: ${{ env.PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
