@@ -33,10 +33,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - dockerfile: ser2net/Dockerfile
-          image: ${{ github.repository }}/ser2net
         - dockerfile: movienight/Dockerfile
           image: ${{ github.repository }}/movienight
+        - dockerfile: ser2net/Dockerfile
+          image: ${{ github.repository }}/ser2net
+        - dockerfile: websockify-go/Dockerfile
+          image: ${{ github.repository }}/websockify-go
 
     steps:
       - name: Checkout repository
