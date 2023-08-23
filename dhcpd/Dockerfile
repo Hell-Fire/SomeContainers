@@ -27,7 +27,7 @@ COPY --from=builder /usr/sbin/dhcpd /usr/sbin/dhcpd
 # dhcpd.sh init
 COPY --from=builder /dhcpd.sh /dhcpd.sh
 
-ENTRYPOINT ["/dhcpd.sh"]
+ENTRYPOINT ["/bin/ash", "/dhcpd.sh"]
 CMD ["-d"]
 
 # bootps/dhcp-server
