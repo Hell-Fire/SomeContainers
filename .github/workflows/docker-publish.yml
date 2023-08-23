@@ -80,11 +80,17 @@ jobs:
             type=ref,event=pr
             type=sha
 
+      - name: Get context
+        id: get-context
+        env:
+          DOCKERFILE: ${{ matrix.dockerfile }}
+        run: echo "::set-output name=context::$(dirname $DOCKERFILE)"
+
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ${{ steps.get-context.outputs.context }}
           file: ${{ matrix.dockerfile }}
           platforms: ${{ env.PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' }}
