@@ -12,12 +12,14 @@ COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /usr/lib/libgcc_s.so.1 /lib/
 # dhcpd.sh deps
 COPY --from=builder /bin/busybox /bin/busybox
 SHELL ["/bin/busybox","ash","-c"]
-RUN /bin/busybox ln -s /bin/busybox /bin/mkdir
-RUN mkdir -p /sbin /usr/bin
-RUN /bin/busybox ln -s /bin/busybox /bin/cp
-RUN /bin/busybox ln -s /bin/busybox /sbin/ip
-RUN /bin/busybox ln -s /bin/busybox /usr/bin/awk
-RUN /bin/busybox ln -s /bin/busybox /bin/touch
+RUN LN="/bin/busybox ln -s /bin/busybox" && \
+    $LN /bin/mkdir && \
+    mkdir -p /sbin /usr/bin && \
+    $LN /bin/cp && \
+    $LN /sbin/ip && \
+    $LN /usr/bin/awk && \
+    $LN /bin/touch && \
+    $LN /bin/ash
 
 # dhcpd proper
 COPY --from=builder /usr/sbin/dhcpd /usr/sbin/dhcpd
