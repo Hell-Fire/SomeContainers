@@ -1,6 +1,6 @@
 #/bin/ash
 
-mkdir -p /etc/dhcp /var/lib/dhcp
+mkdir -p /etc/dhcp /run/dhcp /var/lib/dhcp
 cp /config/* /etc/dhcp/
 # dhcpd needs the pods subnet at a minimum to listen on
 echo "subnet $(ip addr show eth0 | awk '/inet / { print $2 }' | awk -F. '{ print $1 "." $2 "." $3 ".0" }') netmask 255.255.255.0 {}" >> /etc/dhcp/dhcpd.conf
