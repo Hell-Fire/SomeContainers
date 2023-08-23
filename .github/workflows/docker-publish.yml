@@ -33,6 +33,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+        - dockerfile: dhcpd/Dockerfile
+          image: ${{ github.repository }}/dhcpd
         - dockerfile: movienight/Dockerfile
           image: ${{ github.repository }}/movienight
         - dockerfile: ser2net/Dockerfile
