@@ -84,7 +84,7 @@ jobs:
         id: get-context
         env:
           DOCKERFILE: ${{ matrix.dockerfile }}
-        run: echo "context=$(dirname $DOCKERFILE) >> $GITHUB_OUTPUT"
+        run: echo "context=$(dirname $DOCKERFILE)"" >> "$GITHUB_OUTPUT"
 
       - name: Build and push Docker image
         id: build-and-push
