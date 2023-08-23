@@ -11,7 +11,7 @@ COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /usr/lib/libgcc_s.so.1 /lib/
 
 # dhcpd.sh deps
 COPY --from=builder /bin/busybox /bin/busybox
-SHELL ["/bin/busybox"]
+SHELL ["/bin/busybox","ash","-c"]
 RUN ln -s /bin/busybox /bin/mkdir
 RUN ln -s /bin/busybox /bin/cp
 RUN ln -s /bin/busybox /sbin/ip
