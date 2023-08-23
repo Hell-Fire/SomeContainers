@@ -13,6 +13,7 @@ COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /usr/lib/libgcc_s.so.1 /lib/
 COPY --from=builder /bin/busybox /bin/busybox
 SHELL ["/bin/busybox","ash","-c"]
 RUN /bin/busybox ln -s /bin/busybox /bin/mkdir
+RUN mkdir -p /sbin /usr/bin
 RUN /bin/busybox ln -s /bin/busybox /bin/cp
 RUN /bin/busybox ln -s /bin/busybox /sbin/ip
 RUN /bin/busybox ln -s /bin/busybox /usr/bin/awk
