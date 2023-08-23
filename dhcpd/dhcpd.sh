@@ -1,4 +1,4 @@
-#/bin/awk
+#/bin/ash
 
 mkdir /etc/dhcp
 cp /config/* /etc/dhcp/
