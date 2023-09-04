@@ -39,6 +39,8 @@ jobs:
           image: ${{ github.repository }}/keepalived
         - dockerfile: movienight/Dockerfile
           image: ${{ github.repository }}/movienight
+        - dockerfile: novnc/Dockerfile
+          image: ${{ github.repository }}/novnc
         - dockerfile: ser2net/Dockerfile
           image: ${{ github.repository }}/ser2net
         - dockerfile: websockify-go/Dockerfile
