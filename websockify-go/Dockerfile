@@ -9,4 +9,5 @@ FROM scratch AS output
 #COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /lib/
 COPY --from=builder websockify-other/golang/websockify /websockify
 
-CMD ["/websockify"]
+ENTRYPOINT ["/websockify"]
+CMD ["-l", "0.0.0.0:8080"]
