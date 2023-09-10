@@ -1,6 +1,8 @@
 FROM alpine AS builder
-RUN apk add git go make
+RUN apk add git go make patch
 RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout adf00fb
+COPY autoplay-no-mute.patch /
+RUN patch -u -p0 -i autoplay-no-mute.patch
 ARG TARGETOS
 ARG TARGETARCH
 RUN make -C MovieNight TARGET=$TARGETOS ARCH=$TARGETARCH
