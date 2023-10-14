@@ -6,4 +6,8 @@ COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /lib/libcrypto.so.* /lib/lib
 COPY --from=builder /usr/bin/icecast /icecast
 COPY --from=builder /etc/icecast.xml /icecast.xml
 
+USER 1000:1000
 CMD ["/icecast", "-c", "/icecast.xml"]
+
+# HTTP
+EXPOSE 8000/tcp
