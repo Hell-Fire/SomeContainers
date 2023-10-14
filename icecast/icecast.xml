@@ -20,4 +20,9 @@
         <port>8000</port>
         <shoutcast-mount>/stream</shoutcast-mount>
     </listen-socket>
+    <paths>
+        <webroot>/usr/share/icecast/web</webroot>
+        <adminroot>/usr/share/icecast/admin</adminroot>
+        <alias source="/" destination="/status.xsl"/>
+    </paths>
 </icecast>
