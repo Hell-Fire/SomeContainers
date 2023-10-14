@@ -35,6 +35,8 @@ jobs:
         include:
         - dockerfile: dhcpd/Dockerfile
           image: ${{ github.repository }}/dhcpd
+        - dockerfile: icecast/Dockerfile
+          image: ${{ github.repository }}/icecast
         - dockerfile: keepalived/Dockerfile
           image: ${{ github.repository }}/keepalived
         - dockerfile: movienight/Dockerfile
