@@ -1,5 +1,7 @@
---- ./MovieNight/static/main.html.old
-+++ ./MovieNight/static/main.html
+diff --git a/static/main.html b/static/main.html
+index dbf27e0..b245362 100644
+--- a/static/main.html
++++ b/static/main.html
 @@ -27,11 +27,8 @@
 
  {{if .Video}}

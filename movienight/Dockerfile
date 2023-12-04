@@ -2,7 +2,7 @@ FROM alpine AS builder
 RUN apk add git go make patch
 RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout adf00fb
 COPY autoplay-no-mute.patch stats.patch autorestart.patch /
-RUN patch -u -p0 -i /autoplay-no-mute.patch
+RUN cd MovieNight && patch -u -p1 -i /autoplay-no-mute.patch
 RUN cd MovieNight && patch -u -p1 -i /stats.patch
 RUN cd MovieNight && patch -u -p1 -i /autorestart.patch
 ARG TARGETOS
