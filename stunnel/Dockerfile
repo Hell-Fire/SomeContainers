@@ -8,4 +8,4 @@ COPY --from=builder /usr/bin/stunnel /usr/bin/stunnel
 COPY --from=builder /etc/stunnel/stunnel.conf /etc/stunnel/stunnel.conf
 
 ENTRYPOINT ["/usr/bin/stunnel"]
-CMD ["-help"]
+CMD []
