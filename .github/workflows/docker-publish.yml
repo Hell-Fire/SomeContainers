@@ -45,6 +45,8 @@ jobs:
           image: ${{ github.repository }}/novnc
         - dockerfile: ser2net/Dockerfile
           image: ${{ github.repository }}/ser2net
+        - dockerfile: stunnel/Dockerfile
+          image: ${{ github.repository }}/stunnel
         - dockerfile: websockify-go/Dockerfile
           image: ${{ github.repository }}/websockify-go
 
