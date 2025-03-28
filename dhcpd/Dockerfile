@@ -1,4 +1,4 @@
-FROM alpine AS builder
+FROM alpine:3.20 AS builder
 
 RUN apk add dhcp-server-vanilla
 COPY dhcpd.sh /dhcpd.sh
