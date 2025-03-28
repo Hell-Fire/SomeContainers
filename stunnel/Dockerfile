@@ -3,6 +3,7 @@ RUN apk add stunnel
 
 FROM scratch AS output
 COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /lib/
+COPY --from=builder /lib/libssl.so.* /lib/libssl.so.* /lib/
 COPY --from=builder /lib/libcrypto.so.* /lib/libssl.so.* /lib/
 COPY --from=builder /usr/bin/stunnel /usr/bin/stunnel
 COPY --from=builder /etc/stunnel/stunnel.conf /etc/stunnel/stunnel.conf
