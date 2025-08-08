@@ -1,7 +1,9 @@
+
+FROM alpine AS builder
+
 ARG NGINX_VERSION="stable-1.28"
 ARG NGINX_CONFIGURE="--with-http_dav_module"
 
-FROM alpine AS builder
 RUN apk add build-base git pcre-dev
 RUN git clone https://github.com/nginx/nginx.git /nginx
 RUN cd /nginx && git checkout ${NGINX_VERSION}
