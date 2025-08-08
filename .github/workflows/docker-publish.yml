@@ -41,6 +41,8 @@ jobs:
           image: ${{ github.repository }}/keepalived
         - dockerfile: movienight/Dockerfile
           image: ${{ github.repository }}/movienight
+        - dockerfile: nginx-dav/Dockerfile
+          image: ${{ github.repository }}/nginx-dav
         - dockerfile: novnc/Dockerfile
           image: ${{ github.repository }}/novnc
         - dockerfile: ser2net/Dockerfile
