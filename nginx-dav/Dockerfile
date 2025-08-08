@@ -17,7 +17,7 @@ COPY --from=builder /empty /usr/local/nginx/logs
 COPY --from=builder /nginx/objs/nginx /nginx
 COPY nginx.conf /config/nginx.conf
 
-CMD ["/nginx -c /config/nginx.conf"]
+CMD ["/nginx", "-c", "/config/nginx.conf"]
 
 # HTTP
 EXPOSE 80/tcp
