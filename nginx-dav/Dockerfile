@@ -13,6 +13,7 @@ RUN mkdir /empty
 FROM scratch AS output
 COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /lib/
 COPY --from=builder /usr/lib/libpcre.so.1 /usr/lib/libz.so.1 /lib/
+COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /empty /usr/local/nginx/logs
 COPY --from=builder /nginx/objs/nginx /nginx
 COPY nginx.conf /config/nginx.conf
