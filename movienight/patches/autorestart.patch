@@ -1,26 +1,26 @@
 diff --git a/static/js/video.js b/static/js/video.js
-index 7eb7be7..35b4d58 100644
+index 199e57f..bb5851e 100644
 --- a/static/js/video.js
 +++ b/static/js/video.js
 @@ -1,5 +1,6 @@
  /// <reference path='./both.js' />
-
+ 
 +var flvPlayer;
-
+ 
  function initPlayer() {
      if (!flvjs.isSupported()) {
 @@ -8,7 +9,7 @@ function initPlayer() {
      }
-
+ 
      let videoElement = document.querySelector('#videoElement');
 -    let flvPlayer = flvjs.createPlayer({
 +    flvPlayer = flvjs.createPlayer({
          type: 'flv',
-         url: '/live'
-     });
-@@ -24,3 +25,20 @@ function initPlayer() {
+         url: '/live',
+         isLive: true,
+@@ -27,3 +28,20 @@ function initPlayer() {
  }
-
+ 
  window.addEventListener('load', initPlayer);
 +
 +var streamStart = 0;

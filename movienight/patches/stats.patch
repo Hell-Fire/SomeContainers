@@ -1,19 +1,21 @@
 diff --git a/handlers.go b/handlers.go
-index 72bf6c4..e0bba23 100644
+index 72bf6c4..c1264fd 100644
 --- a/handlers.go
 +++ b/handlers.go
-@@ -460,6 +460,26 @@ func handleLive(w http.ResponseWriter, r *http.Request) {
+@@ -460,6 +460,28 @@ func handleLive(w http.ResponseWriter, r *http.Request) {
  	}
  }
  
 +func handleStats(w http.ResponseWriter, r *http.Request) {
 +	type Response struct {
 +		StreamStart int64 `json:"streamStart"`
++		StreamLive  bool  `json:"streamLive"`
 +	}
 +	res := &Response{}
 +
 +	stats.mutex.Lock()
 +	res.StreamStart = stats.streamStart.Unix()
++	res.StreamLive = stats.streamLive
 +	stats.mutex.Unlock()
 +	
 +	resJson, err := json.Marshal(res)
@@ -30,7 +32,7 @@ index 72bf6c4..e0bba23 100644
  	if r.URL.Path != "/" {
  		// not really an error for the server, but for the client.
 diff --git a/main.go b/main.go
-index 5f13167..81b8f0d 100644
+index 662f2a6..0e9623c 100644
 --- a/main.go
 +++ b/main.go
 @@ -151,6 +151,7 @@ func run(args args) {

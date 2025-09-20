@@ -1,10 +1,12 @@
 FROM alpine AS builder
 RUN apk add git go make patch
-RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout adf00fb
-COPY autoplay-no-mute.patch stats.patch autorestart.patch /
-RUN cd MovieNight && patch -u -p1 -i /autoplay-no-mute.patch
-RUN cd MovieNight && patch -u -p1 -i /stats.patch
-RUN cd MovieNight && patch -u -p1 -i /autorestart.patch
+RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout 75854ce
+COPY /patches/ /patches/
+RUN cd MovieNight \
+        && for i in ../patches/*.patch; do \
+            echo applying $i; \
+            patch --no-backup-if-mismatch --forward --reject-file=/tmp/patch.rej --unified --strip=1 --in=$i; \
+        done
 ARG TARGETOS
 ARG TARGETARCH
 RUN make -C MovieNight TARGET=$TARGETOS ARCH=$TARGETARCH
