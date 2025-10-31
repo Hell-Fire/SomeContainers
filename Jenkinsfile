@@ -52,54 +52,58 @@ spec:
         }
     }
 
-    matrix {
-        axes {
-            axis {
-                name 'IMAGE'
-                values 'dhcpd', 'icecast', 'keepalived', 'meshcentral', 'movienight', 'nginx-dav', 'novnc', 'ser2net', 'stunnel', 'websockify-go'
+    stages {
+        stage('Harbor-Creds-Init') {
+            steps {
+                withCredentials(
+                [
+                    usernamePassword(
+                        credentialsId: 'harbor',
+                        passwordVariable: 'REPOPASS',
+                        usernameVariable: 'REPOUSER'
+                    )
+                ]
+                ) {
+                    sh './.jenkins/docker-creds-from-env.sh'
+                }
             }
         }
 
-        stages {
-            stage('Harbor-Creds-Init') {
-                steps {
-                    withCredentials(
-                    [
-                        usernamePassword(
-                            credentialsId: 'harbor',
-                            passwordVariable: 'REPOPASS',
-                            usernameVariable: 'REPOUSER'
-                        )
-                    ]
-                    ) {
-                        sh './.jenkins/docker-creds-from-env.sh'
+        stage('Checkout') {
+            steps {
+                checkout scm
+                env.GIT_SHORT_SHA = sh(
+                    returnStdout: true,
+                    script: 'git rev-parse HEAD'
+                ).trim().substring(0, 7)
+            }
+        }
+
+        stage('Image-Matrix') {
+            matrix {
+                axes {
+                    axis {
+                        name 'IMAGE'
+                        values 'dhcpd', 'icecast', 'keepalived', 'meshcentral', 'movienight', 'nginx-dav', 'novnc', 'ser2net', 'stunnel', 'websockify-go'
                     }
                 }
-            }
 
-            stage('Checkout') {
-                steps {
-                    checkout scm
-                    env.GIT_SHORT_SHA = sh(
-                        returnStdout: true,
-                        script: 'git rev-parse HEAD'
-                    ).trim().substring(0, 7)
-                }
-            }
-
-            stage('Build') {
-                steps {
-                    sh '''buildctl \
-                            --addr tcp://127.0.0.1:1234 \
-                            build \
-                            --frontend dockerfile.v0 \
-                            --local context=$WORKSPACE/$IMAGE \
-                            --local dockerfile=$WORKSPACE/$IMAGE \
-                            --opt platform=${PLATFORMS} \
-                            --export-cache type=inline \
-                            --import-cache type=registry,\\\"ref=${REPOHOST}${LIBRARY}/${IMAGE}\\\" \
-                            --output type=image,\\\"name=${REPOHOST}${LIBRARY}/${IMAGE}:sha-${GIT_SHORT_SHA},${REPOHOST}${LIBRARY}/${IMAGE}:latest\\\",push=true
-'''
+                stages {
+                    stage('Build-$IMAGE') {
+                        steps {
+                            sh '''buildctl \
+                                    --addr tcp://127.0.0.1:1234 \
+                                    build \
+                                    --frontend dockerfile.v0 \
+                                    --local context=$WORKSPACE/$IMAGE \
+                                    --local dockerfile=$WORKSPACE/$IMAGE \
+                                    --opt platform=${PLATFORMS} \
+                                    --export-cache type=inline \
+                                    --import-cache type=registry,\\\"ref=${REPOHOST}${LIBRARY}/${IMAGE}\\\" \
+                                    --output type=image,\\\"name=${REPOHOST}${LIBRARY}/${IMAGE}:sha-${GIT_SHORT_SHA},${REPOHOST}${LIBRARY}/${IMAGE}:latest\\\",push=true
+        '''
+                        }
+                    }
                 }
             }
         }
