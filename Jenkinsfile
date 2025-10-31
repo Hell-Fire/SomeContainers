@@ -70,12 +70,14 @@ spec:
         }
 
         stage('Checkout') {
-            script {
-                checkout scm
-                env.GIT_SHORT_SHA = sh(
-                    returnStdout: true,
-                    script: 'git rev-parse HEAD'
-                ).trim().substring(0, 7)
+            steps {
+                script {
+                    checkout scm
+                    env.GIT_SHORT_SHA = sh(
+                        returnStdout: true,
+                        script: 'git rev-parse HEAD'
+                    ).trim().substring(0, 7)
+                }
             }
         }
 
