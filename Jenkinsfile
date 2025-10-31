@@ -70,7 +70,7 @@ spec:
         }
 
         stage('Checkout') {
-            steps {
+            script {
                 checkout scm
                 env.GIT_SHORT_SHA = sh(
                     returnStdout: true,
