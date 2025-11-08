@@ -2,7 +2,7 @@ FROM alpine AS builder
 RUN apk add icecast
 
 FROM scratch AS output
-COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /lib/libcrypto.so.* /lib/libssl.so.* /lib/libz.so.* /usr/lib/libbrotlicommon.so.* /usr/lib/libbrotlidec.so.* /usr/lib/libcurl.so.* /usr/lib/libidn2.so.* /usr/lib/liblzma.so.* /usr/lib/libnghttp2.so.* /usr/lib/libogg.so.* /usr/lib/libtheora.so.* /usr/lib/libunistring.so.* /usr/lib/libvorbis.so.* /usr/lib/libxml2.so.* /usr/lib/libxslt.so.* /lib/
+COPY --from=builder /lib/ld-musl-* /lib/libc.musl-* /usr/lib/libbrotlicommon.so.* /usr/lib/libbrotlidec.so.* /usr/lib/libcares.so.* /usr/lib/libcurl.so.* /usr/lib/libcrypto.so.* /usr/lib/libidn2.so.* /usr/lib/liblzma.so.* /usr/lib/libnghttp2.so.* /usr/lib/libogg.so.* /usr/lib/libpsl.so.* /usr/lib/libssl.so.* /usr/lib/libtheora.so.* /usr/lib/libunistring.so.* /usr/lib/libvorbis.so.* /usr/lib/libxml2.so.* /usr/lib/libxslt.so.* /usr/lib/libz.so.* /usr/lib/libzstd.so.* /lib/
 COPY --from=builder /usr/share/icecast /usr/share/icecast
 COPY --from=builder /usr/bin/icecast /icecast
 COPY icecast.xml /config/icecast.xml
