@@ -91,7 +91,7 @@ spec:
                 }
 
                 stages {
-                    stage("Build-$IMAGE") {
+                    stage('Build-Image') {
                         steps {
                             lock('one-at-a-time-plz') {
                                 sh '''buildctl \
