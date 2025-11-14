@@ -92,7 +92,8 @@ spec:
 
                 stages {
                     stage("Build-$IMAGE") {
-                        lock('one-at-a-time-plz') {                            steps {
+                        steps {
+                            lock('one-at-a-time-plz') {
                                 sh '''buildctl \
                                         --addr tcp://127.0.0.1:1234 \
                                         build \
