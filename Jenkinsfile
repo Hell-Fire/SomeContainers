@@ -92,21 +92,20 @@ spec:
 
                 stages {
                     stage("Build-$IMAGE") {
-                        options {
-                            lock('one-at-a-time-plz')
-                        }
-                        steps {
-                            sh '''buildctl \
-                                    --addr tcp://127.0.0.1:1234 \
-                                    build \
-                                    --frontend dockerfile.v0 \
-                                    --local context=$WORKSPACE/$IMAGE \
-                                    --local dockerfile=$WORKSPACE/$IMAGE \
-                                    --opt platform=${PLATFORMS} \
-                                    --export-cache type=inline \
-                                    --import-cache type=registry,\\\"ref=${REPOHOST}${LIBRARY}/${IMAGE}\\\" \
-                                    --output type=image,\\\"name=${REPOHOST}${LIBRARY}/${IMAGE}:sha-${GIT_SHORT_SHA},${REPOHOST}${LIBRARY}/${IMAGE}:latest\\\",push=true
-        '''
+                        lock('one-at-a-time-plz') {
+                            steps {
+                                sh '''buildctl \
+                                        --addr tcp://127.0.0.1:1234 \
+                                        build \
+                                        --frontend dockerfile.v0 \
+                                        --local context=$WORKSPACE/$IMAGE \
+                                        --local dockerfile=$WORKSPACE/$IMAGE \
+                                        --opt platform=${PLATFORMS} \
+                                        --export-cache type=inline \
+                                        --import-cache type=registry,\\\"ref=${REPOHOST}${LIBRARY}/${IMAGE}\\\" \
+                                        --output type=image,\\\"name=${REPOHOST}${LIBRARY}/${IMAGE}:sha-${GIT_SHORT_SHA},${REPOHOST}${LIBRARY}/${IMAGE}:latest\\\",push=true
+            '''
+                            }
                         }
                     }
                 }
