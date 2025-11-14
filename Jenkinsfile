@@ -81,7 +81,7 @@ spec:
             }
         }
 
-        stage('Image-Matrix') {
+        stage('Build') {
             matrix {
                 axes {
                     axis {
@@ -91,7 +91,10 @@ spec:
                 }
 
                 stages {
-                    stage('Build-$IMAGE') {
+                    stage("Build-$IMAGE") {
+                        options {
+                            lock('one-at-a-time-plz')
+                        }
                         steps {
                             sh '''buildctl \
                                     --addr tcp://127.0.0.1:1234 \
