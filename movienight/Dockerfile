@@ -1,6 +1,6 @@
 FROM alpine AS builder
 RUN apk add git go make patch
-RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout 75854ce
+RUN git clone https://github.com/zorchenhimer/MovieNight.git && cd MovieNight && git checkout a9b1fbd3be3989959c3128fb0232490fd5af7fe2
 COPY /patches/ /patches/
 RUN cd MovieNight \
         && for i in ../patches/*.patch; do \
